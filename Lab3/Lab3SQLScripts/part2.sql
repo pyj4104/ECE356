@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS Department;
 CREATE TABLE Department(deptID INT PRIMARY KEY,deptName VARCHAR(100),location VARCHAR(100));                    
           
 DROP TABLE IF EXISTS Employee;
-CREATE TABLE Employee (empID INT PRIMARY KEY, empName VARCHAR (100), job VARCHAR(100), deptID INT, salary INT, CONSTRAINT FOREIGN KEY(deptID) REFERENCES Department(deptID));
+CREATE TABLE Employee (empID INT PRIMARY KEY AUTO_INCREMENT, empName VARCHAR (100), job VARCHAR(100), deptID INT, salary INT, CONSTRAINT FOREIGN KEY(deptID) REFERENCES Department(deptID));
 
 -- For the Assigned table, you need ti specify a  
 -- primary key that includes two columns        
@@ -94,23 +94,23 @@ INSERT INTO Department(deptID, deptName, location) VALUES(3, 'marketing', 'Water
 INSERT INTO Department(deptID, deptName, location) VALUES(7, 'research', 'Guelph');            
 INSERT INTO Department(deptID, deptName, location) VALUES(12, 'software', 'Toronto'); 
 INSERT INTO Department(deptID, deptName, location) VALUES(13, 'computing', 'Toronto');
-INSERT INTO Employee(empID, empName, job, deptID, salary) VALUES(23, 'Smith', 'programmer', 12, 35000); 
-INSERT INTO Employee(empID, empName, job, deptID, salary) VALUES(45, 'Kelly', 'engineer', 7, 37000); 
-INSERT INTO Employee(empID, empName, job, deptID, salary) VALUES(56, 'Herr', 'janitor', 7, 26000); 
-INSERT INTO Employee(empID, empName, job, deptID, salary) VALUES(89, 'Williams', 'analyst', 12, 36000); 
-INSERT INTO Employee(empID, empName, job, deptID, salary) VALUES(77, 'Hergot', 'secretary', 7, 28000); 
-INSERT INTO Employee(empID, empName, job, deptID, salary) VALUES(66, 'Hess', 'technician', 7, 32000); 
-INSERT INTO Employee(empID, empName, job, deptID, salary) VALUES(92, 'Mays', 'engineer', 7, 45000); 
-INSERT INTO Employee(empID, empName, job, deptID, salary) VALUES(68, 'Morris', 'secretary', 3, 23000);  
-INSERT INTO Employee(empID, empName, job, deptID, salary) VALUES(69, 'Maria', 'engineer', 3, 32000); 
+INSERT INTO Employee(empName, job, deptID, salary) VALUES('Smith', 'programmer', 12, 35000); 
+INSERT INTO Employee(empName, job, deptID, salary) VALUES('Kelly', 'engineer', 7, 37000); 
+INSERT INTO Employee(empName, job, deptID, salary) VALUES('Herr', 'janitor', 7, 26000); 
+INSERT INTO Employee(empName, job, deptID, salary) VALUES('Williams', 'analyst', 12, 36000); 
+INSERT INTO Employee(empName, job, deptID, salary) VALUES('Hergot', 'secretary', 7, 28000); 
+INSERT INTO Employee(empName, job, deptID, salary) VALUES('Hess', 'technician', 7, 32000); 
+INSERT INTO Employee(empName, job, deptID, salary) VALUES('Mays', 'engineer', 7, 45000); 
+INSERT INTO Employee(empName, job, deptID, salary) VALUES('Morris', 'secretary', 3, 23000);  
+INSERT INTO Employee(empName, job, deptID, salary) VALUES('Maria', 'engineer', 3, 32000); 
 INSERT INTO Project(projID, title, budget, funds) VALUES(345, 'compiler', 500000, 250000); 
 INSERT INTO Project(projID, title, budget, funds) VALUES(123, 'display', 650000, 370000); 
-INSERT INTO Assigned(empID, projID, role) VALUES(23, 345, 'programmer');            
-INSERT INTO Assigned(empID, projID, role) VALUES(66, 123, 'programmer');        
-INSERT INTO Assigned(empID, projID, role) VALUES(77, 123, 'secretary');           
-INSERT INTO Assigned(empID, projID, role) VALUES(45, 123, 'manager'); 
-INSERT INTO Assigned(empID, projID, role) VALUES(89, 345, 'manager');     
-INSERT INTO Assigned(empID, projID, role) VALUES(92, 123, 'engineer'); 
+INSERT INTO Assigned(empID, projID, role) VALUES(1, 345, 'programmer');            
+INSERT INTO Assigned(empID, projID, role) VALUES(6, 123, 'programmer');        
+INSERT INTO Assigned(empID, projID, role) VALUES(5, 123, 'secretary');           
+INSERT INTO Assigned(empID, projID, role) VALUES(2, 123, 'manager'); 
+INSERT INTO Assigned(empID, projID, role) VALUES(4, 345, 'manager');     
+INSERT INTO Assigned(empID, projID, role) VALUES(7, 123, 'engineer'); 
 
 CREATE TABLE SupplyData(SupplyID INT,
 supplyDescription VARCHAR(100),

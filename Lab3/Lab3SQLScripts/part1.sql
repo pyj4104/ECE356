@@ -70,7 +70,6 @@ Note:  use INSERT INTO (SELECT .. FROM SupplyData)
 */
 
 INSERT INTO SupplyType (supplyTypeID, description) (SELECT DISTINCT typeID, typeDescription FROM SupplyData);
-
 INSERT INTO Supply (SupplyID, supplyDescription, unitDescription, costPerunit, typeID)
     (SELECT SupplyID, supplyDescription, unitDescription, costPerunit, typeID FROM SupplyData);
 SELECT * FROM SupplyType;
