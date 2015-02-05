@@ -75,7 +75,7 @@ FOREIGN KEY (typeID) REFERENCES SupplyType(supplyTypeID)
 
 
 DROP TABLE IF EXISTS ProjectSupply;
-CREATE TABLE ProjectSupply (projectID INT, supplyID INT, quantity INT, FOREIGN KEY (projectID) REFERENCES Project(projID)); 
+CREATE TABLE ProjectSupply (projectID INT, supplyID INT, quantity INT, FOREIGN KEY (projectID) REFERENCES Project(projID), FOREIGN KEY (supplyID) REFERENCES Supply(supplyID)); 
 
 /* Reinsert data into all tables 
 
