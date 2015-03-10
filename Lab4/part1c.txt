@@ -1,0 +1,35 @@
+Before
++----+-------------+----------+------+---------------+------+---------+------+------+-------------+
+| id | select_type | table    | type | possible_keys | key  | key_len | ref  | rows | Extra       |
++----+-------------+----------+------+---------------+------+---------+------+------+-------------+
+|  1 | SIMPLE      | Employee | ALL  | NULL          | NULL | NULL    | NULL | 1011 | Using where | 
++----+-------------+----------+------+---------------+------+---------+------+------+-------------+
++----+-------------+-------+------+---------------+--------+---------+---------------------------+------+-------------+
+| id | select_type | table | type | possible_keys | key    | key_len | ref                       | rows | Extra       |
++----+-------------+-------+------+---------------+--------+---------+---------------------------+------+-------------+
+|  1 | SIMPLE      | D     | ALL  | PRIMARY       | NULL   | NULL    | NULL                      |    4 |             | 
+|  1 | SIMPLE      | E     | ref  | deptID        | deptID | 5       | ece356db_y27park.D.deptID |  337 | Using where | 
++----+-------------+-------+------+---------------+--------+---------+---------------------------+------+-------------+
+ 
+After
++----+-------------+----------+-------+---------------+--------------+---------+------+------+-------------+
+| id | select_type | table    | type  | possible_keys | key          | key_len | ref  | rows | Extra       |
++----+-------------+----------+-------+---------------+--------------+---------+------+------+-------------+
+|  1 | SIMPLE      | Employee | range | salary_index  | salary_index | 5       | NULL |    1 | Using where | 
++----+-------------+----------+-------+---------------+--------------+---------+------+------+-------------+
++----+-------------+-------+------+---------------+--------------+---------+---------------------------+------+-------------+
+| id | select_type | table | type | possible_keys | key          | key_len | ref                       | rows | Extra       |
++----+-------------+-------+------+---------------+--------------+---------+---------------------------+------+-------------+
+|  1 | SIMPLE      | D     | ALL  | PRIMARY       | NULL         | NULL    | NULL                      |    4 |             | 
+|  1 | SIMPLE      | E     | ref  | deptID_index  | deptID_index | 5       | ece356db_y27park.D.deptID |  337 | Using where | 
++----+-------------+-------+------+---------------+--------------+---------+---------------------------+------+-------------+
+
+Comment on rows:
+	Both results are expected. For the range, a new index is added to the salary using BTREE. It improved from accessing 1011 rows to 1 row. For the joining operation, the reference key and the primary key is already added as index, so the improvement was already made. Indexing on the other attributes will not help with the operation.
+
+Comment on indexes that are chosen:
+	Before adding the indexes, there was only one index in the Employee table, called empID (which is a primary key). When the search was based on range, the empID does not help, so it was not used. However, after the index on salary of the table was added, it looked at the index and made the search based on it.
+	For the joinging operation, it was already looking at the indexes that were created when foreign key relationship was added. After deptID_index was added, it looked at the index that was added, but it is still the same index that was already added. (The index just changed its name.) Therefore, since it was looking at the same index with different name, no performance improvement was observed.
+
+Comment on the joining operation:
+	The department table was first, then the employee table was appended on top of it.
