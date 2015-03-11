@@ -7,7 +7,7 @@
 /* 2) Add 1000 employees to the table to demostrate use   */       /* indexes                                                */
 
 
-SET storage_engine=MEMORY;
+SET storage_engine=InnoDB;
 
 /* replace xxxxx with your user id */
 USE ece356db_y27park; 

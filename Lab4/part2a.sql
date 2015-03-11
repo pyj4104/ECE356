@@ -1,63 +1,31 @@
-USE ece356db_xxxxx;
+USE ece356db_y27park;
 
-
-/* Create store procedure 
-
-/* Example 1: No output parameters */
-
-                                                                                                */
-/* Note: we temporarily change the myql delimiter to $ ( instead of ;)                          */
-/* so that we can use ; for the end of each statement but $ for the end of the stored procedure */
+DROP PROCEDURE IF EXISTS increase_salary_proc;
 
 DELIMITER $
-
-DROP PROCEDURE IF EXISTS emp_count_1;
-
-
-CREATE PROCEDURE emp_count_1()
+CREATE PROCEDURE increase_salary_proc
+(
+    IN inEmpID INT,
+    IN inPercentage DOUBLE(4, 2)
+)
 BEGIN
- SELECT COUNT(*) FROM Employee;
-END
-$
+    DECLARE raised INT;
+    DECLARE pIncrease DOUBLE(7,4);
+    
+    SELECT salary INTO raised FROM Employee WHERE empID = inEmpID;
+    SET pIncrease = inPercentage / 100;
+
+    SET raised = raised * pIncrease + raised;
+
+    UPDATE  Employee
+    SET     salary = raised
+    WHERE   empID = inEmpID;
+END;$
 DELIMITER ;
 
+INSERT INTO Employee
+VALUES (1, 'davidian', 'programmer', 12, 1000);
 
-/* To invoke this procedure use the mysql command statement
-   CALL emp_count;
-*/
-
-
-
-
-
-
-
-/* Example 2: Output parameters */
-
-
-DELIMITER $
-
-DROP PROCEDURE IF EXISTS emp_count_2;
-
-CREATE PROCEDURE emp_count_2(OUT param1 INT)
-BEGIN
- SELECT COUNT(*) INTO param1 FROM Employee;
-END
-$
-DELIMITER ;
-
-
-/* To invoke this procedure use the mysql command statement
-   CALL emp_count_2(@empCount);
-   SELECT @empCount; 
-*/
-
-
-
-
-
-
-
-
-
-
+SELECT salary FROM Employee WHERE empID = 1;
+CALL increase_salary_proc(1, 50);
+SELECT salary FROM Employee WHERE empID = 1;
